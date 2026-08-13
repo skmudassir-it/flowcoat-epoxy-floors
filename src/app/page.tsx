@@ -1,69 +1,133 @@
+import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, Star } from "lucide-react";
+import { buttonVariants } from "@/components/ui/button";
+import { localBusinessSchema } from "@/lib/data";
+import { FadeIn } from "@/components/motion";
+import {
+  CtaBand,
+  FaqSection,
+  FeatureGrid,
+  ProcessSection,
+  ProjectsGrid,
+  ServicesGrid,
+  StatsStrip,
+  TestimonialsSection,
+} from "@/components/sections";
+import { cn } from "@/lib/utils";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "Premium Epoxy & Polyaspartic Flooring",
+  description:
+    "FlowCoat installs seamless, high-gloss epoxy floors — garage coatings, metallic epoxy, polyaspartic and industrial finishes. Free quotes within 48 hours.",
+  openGraph: {
+    title: "FlowCoat Epoxy Floors — Floors that shine like liquid glass",
+    description:
+      "Seamless, high-gloss epoxy floors for garages, showrooms, warehouses and homes. Free on-site quotes.",
+  },
+};
+
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <>
+      <section className="relative px-4 pb-16 pt-36 md:pt-44">
+        <div className="mx-auto grid max-w-6xl items-center gap-14 lg:grid-cols-2">
+          <FadeIn>
+            <span className="glass inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-accent">
+              <span className="h-2 w-2 rounded-full bg-accent" />
+              Premium epoxy flooring
+            </span>
+            <h1 className="mt-6 font-display text-4xl font-extrabold leading-[1.08] tracking-tight text-primary sm:text-5xl xl:text-6xl">
+              Floors that shine like{" "}
+              <span className="bg-linear-to-r from-accent via-accent to-primary bg-clip-text text-transparent">
+                liquid glass.
+              </span>
+            </h1>
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-primary/70">
+              FlowCoat designs and installs seamless, high-gloss epoxy and polyaspartic floors for
+              garages, showrooms, warehouses and homes — finished to a mirror shine, built to last
+              decades.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center gap-4">
+              <Link
+                href="/contact"
+                className={cn(
+                  buttonVariants({ size: "lg" }),
+                  "rounded-full bg-linear-to-br from-primary to-accent text-white shadow-lg shadow-accent/25 hover:opacity-90 hover:text-white"
+                )}
+              >
+                Get a Free Quote
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+              <Link
+                href="/projects"
+                className={cn(
+                  buttonVariants({ size: "lg", variant: "outline" }),
+                  "rounded-full bg-white/50 text-primary backdrop-blur-xl"
+                )}
+              >
+                See Our Work
+              </Link>
+            </div>
+            <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-primary/70">
+              <span className="flex items-center gap-2">
+                <span className="flex text-amber-400" aria-label="5 star rating">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} className="h-4 w-4 fill-current" />
+                  ))}
+                </span>
+                Rated 4.9/5 by 300+ clients
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+                Free on-site measure
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+                Fixed quotes in 48h
+              </span>
+            </div>
+          </FadeIn>
+          <FadeIn delay={0.15}>
+            <div className="relative">
+              <div
+                aria-hidden
+                className="absolute -inset-6 rounded-[2.5rem] bg-linear-to-br from-primary/20 to-accent/20 blur-3xl"
+              />
+              <div className="glass relative overflow-hidden rounded-[2.5rem] p-2.5">
+                <Image
+                  src="/images/hero.jpg"
+                  alt="High-gloss slate blue epoxy floor in a modern garage with teal accent lighting"
+                  width={1200}
+                  height={750}
+                  priority
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  className="h-auto w-full rounded-[2rem] object-cover"
+                />
+              </div>
+              <div className="glass-strong absolute -bottom-6 -left-4 rounded-2xl px-5 py-4 shadow-xl shadow-primary/10 sm:-left-8">
+                <p className="font-display text-2xl font-extrabold text-primary">10-Year</p>
+                <p className="text-xs font-semibold uppercase tracking-widest text-accent">
+                  Warranty available
+                </p>
+              </div>
+            </div>
+          </FadeIn>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </section>
+      <FeatureGrid />
+      <StatsStrip />
+      <ServicesGrid />
+      <ProcessSection />
+      <ProjectsGrid limit={2} />
+      <TestimonialsSection />
+      <FaqSection />
+      <CtaBand />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+      />
+    </>
   );
 }
